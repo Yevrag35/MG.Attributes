@@ -40,10 +40,12 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractAttribute.cs" />
     <Compile Include="AbstractClass.cs" />
     <Compile Include="IAttribute.cs" />
     <Compile Include="NameAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Testing.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
