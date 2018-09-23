@@ -1,5 +1,4 @@
-﻿using MG.Attributes.Interfaces;
-using System;
+﻿using System;
 
 namespace MG.Attributes
 {

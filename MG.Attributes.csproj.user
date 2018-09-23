@@ -3,6 +3,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
     <StartProgram>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</StartProgram>
-    <StartArguments>-NoExit -Command "Import-Module .\MG.Attributes.dll%3b %24t = New-Object MG.Testing%3b %24t | gm -MemberType Method%3b %24fi = [MG.Farewells]::Bye.GetType%28%29.GetField%28[MG.Farewells]::Bye.ToString%28%29%29"</StartArguments>
+    <StartArguments>-NoExit -Command "Import-Module .\MG.Attributes.dll%3b %24test = New-Object MG.Testing%3b"</StartArguments>
   </PropertyGroup>
 </Project>

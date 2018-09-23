@@ -1,14 +1,29 @@
 ﻿using MG.Attributes;
-using MG.Attributes.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MG
 {
-    public class Testing : MGNameResolver
+    public class Testing : AttributeResolver
     {
         public Testing() { }
+
+        public Farewells GetFarewallByString(string str)
+        {
+            return GetEnumFromValue<Farewells>(str, typeof(CorrespondingAttribute));
+        }
+
+        public Farewells GetFarewallFromGreeting(Greetings greeting)
+        {
+            return GetAttEnumByMatchingEnumAttribute<Farewells>(greeting, typeof(CorrespondingAttribute));
+        }
+
+        public Farewells GetFarewallByDriveType(DriveType dT)
+        {
+            return GetAttEnumByMatchingEnumAttributes<Farewells>(dT, typeof(EnumAttribute));
+        }
     }
 
     public enum Greetings : int
@@ -28,6 +43,7 @@ namespace MG
         [Corresponding("Hiya")]
         Byeya = 1,
 
+        [Enum(new DriveType[2] { DriveType.Fixed, DriveType.Ram })]
         [Corresponding("Hey")]
         Seeya = 2,
 
@@ -38,13 +54,18 @@ namespace MG
         Later = 4
     }
 
-    public class CorrespondingAttribute : Attribute, IAttribute
+    public class CorrespondingAttribute : MGAbstractAttribute
     {
-        private readonly string _val;
-        public object Value => _val;
         public CorrespondingAttribute(string val)
+            : base(val)
         {
-            _val = val;
+        }
+    }
+    public class EnumAttribute : MGAbstractAttribute
+    {
+        public EnumAttribute(DriveType[] dTs)
+            : base(dTs)
+        {
         }
     }
 }

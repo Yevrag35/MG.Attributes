@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MG.Attributes.Interfaces
+namespace MG.Attributes
 {
     public interface IAttribute
     {

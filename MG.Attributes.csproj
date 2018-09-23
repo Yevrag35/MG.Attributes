@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -29,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
@@ -41,11 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractAttribute.cs" />
-    <Compile Include="AbstractClass.cs" />
+    <None Include="AbstractClass.cs" />
+    <Compile Include="AttributeResolver.cs" />
     <Compile Include="IAttribute.cs" />
     <Compile Include="NameAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Testing.cs" />
+    <Compile Include="Testing.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
