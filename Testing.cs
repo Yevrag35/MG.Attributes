@@ -15,14 +15,24 @@ namespace MG
             return GetEnumFromValue<Farewells>(str, typeof(CorrespondingAttribute));
         }
 
+        public DriveType GetDriveTypesFromFarewall(Farewells farewell)
+        {
+            return GetAttributeValue<DriveType>(farewell, typeof(EnumAttribute));
+        }
+
         public Farewells GetFarewallFromGreeting(Greetings greeting)
         {
-            return GetAttEnumByMatchingEnumAttribute<Farewells>(greeting, typeof(CorrespondingAttribute));
+            return GetAttEnumByMatchingEnumAttributes<Farewells>(greeting, typeof(CorrespondingAttribute));
         }
 
         public Farewells GetFarewallByDriveType(DriveType dT)
         {
             return GetAttEnumByMatchingEnumAttributes<Farewells>(dT, typeof(EnumAttribute));
+        }
+
+        public Greetings GetGreetingByFarewallAttribute(Farewells fare)
+        {
+            return GetNonAttEnumFromAttEnum<Greetings>(fare, typeof(CorrespondingAttribute));
         }
     }
 

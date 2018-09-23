@@ -4,6 +4,8 @@ namespace MG.Attributes
 {
     public interface IAttribute
     {
+        Type ValueType { get; }
         object Value { get; }
+        bool ValueIsArray { get; }
     }
 }

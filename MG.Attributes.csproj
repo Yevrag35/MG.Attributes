@@ -43,6 +43,7 @@
     <Compile Include="AbstractAttribute.cs" />
     <None Include="AbstractClass.cs" />
     <Compile Include="AttributeResolver.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="IAttribute.cs" />
     <Compile Include="NameAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

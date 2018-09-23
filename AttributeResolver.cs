@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MG.Attributes.Exceptions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,22 +41,42 @@ namespace MG.Attributes
             else if (attributeType.IsInterface)
                 throw new ArgumentException("This method does not support interfaces for the attributeType!");
 
-            object castedObj = InvokeGenericGetAtts(e, attributeType);
-            return (T)((IAttribute[])castedObj)[0].Value;
+            var castedObj = (IAttribute)InvokeGenericGetAtts(e, attributeType);
+            if (castedObj.ValueIsArray)
+                throw new InvalidOperationException("The casted object has multiple values!");
+
+            else
+                return (T)castedObj.Value;
+
         }
 
         public T[] GetAttributeValues<T>(Enum e, Type attributeType)
         {
-            FieldInfo fi = GetFieldInfo(e);
-            object co = InvokeGenericGetAtts(e, attributeType);
-            var ias = (IAttribute[])co;
-            var tArr = new T[ias.Length];
-            for (int i = 0; i < ias.Length; i++)
+            if (!attributeType.GetInterfaces().Contains(typeof(IAttribute)))
+                throw new ArgumentException("This method only supports attributes who inherit 'IAttribute'.");
+            else if (attributeType.IsInterface)
+                throw new ArgumentException("This method does not support interfaces for the attributeType!");
+
+            var castedObj = (IAttribute)InvokeGenericGetAtts(e, attributeType);
+            if (castedObj == null)
             {
-                var iat = ias[i];
-                tArr[i] = (T)iat.Value;
+                return default;
             }
-            return tArr;
+            else if (castedObj.ValueIsArray)
+            {
+                object[] objArr = ((IEnumerable)castedObj.Value).Cast<object>().ToArray();
+                var tArr = new T[objArr.Length];
+                for (int i = 0; i < objArr.Length; i++)
+                {
+                    tArr[i] = (T)objArr[i];
+                }
+                return tArr;
+            }
+            else
+            {
+                var tArr = new T[1] { (T)castedObj.Value };
+                return tArr;
+            }
         }
 
         public T GetEnumFromValue<T>(object value, Type attributeType) where T : Enum
@@ -72,21 +93,6 @@ namespace MG.Attributes
             }
             return default;
         }
-        public T GetAttEnumByMatchingEnumAttribute<T>(Enum nonAttributedEnum, Type matchingAttributeType) where T : Enum
-        {
-            var enumString = nonAttributedEnum.ToString();
-            T[] tArr = GetEnumValues<T>();
-            for (int i = 0; i < tArr.Length; i++)
-            {
-                T t = tArr[i];
-                object val = GetAttributeValue<object>(t, matchingAttributeType);
-                if (val.Equals(enumString))
-                {
-                    return t;
-                }
-            }
-            return default;
-        }
         public T GetAttEnumByMatchingEnumAttributes<T>(Enum nonAttributedEnum, Type matchingAttributeType) where T : Enum
         {
             var enumString = nonAttributedEnum.ToString();
@@ -94,10 +100,29 @@ namespace MG.Attributes
             for (int i = 0; i < tArr.Length; i++)
             {
                 T t = tArr[i];
-                object[] val = GetAttributeValues<object>(t, matchingAttributeType);
-                if (val.Contains(enumString))
+                object val = GetAttributeValue<object>(t, matchingAttributeType);
+                if (val != null)
                 {
-                    return t;
+                    Type valType = val.GetType();
+                    if (valType.IsArray)
+                    {
+                        var valArr = ((IEnumerable)val).Cast<object>().ToArray();
+                        for (int o1 = 0; o1 < valArr.Length; o1++)
+                        {
+                            object o = valArr[o1];
+                            if (o.ToString().Equals(enumString))
+                            {
+                                return t;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (val.ToString().Equals(enumString))
+                        {
+                            return t;
+                        }
+                    }
                 }
             }
             return default;
@@ -107,31 +132,68 @@ namespace MG.Attributes
         {
             object val = GetAttributeValue<object>(attributedEnum, matchingAttributeType);
             T[] tArr = GetEnumValues<T>();
-            for (int i = 0; i < tArr.Length; i++)
+
+            var valType = val.GetType();
+            switch (valType.IsArray)
             {
-                T t = tArr[i];
-                var tStr = t.ToString();
-                if (tStr.Equals(val))
-                {
-                    return t;
-                }
+                case true:
+                    object[] valCol = ((IEnumerable)val).Cast<object>().ToArray();
+                    for (int i = 0; i < tArr.Length; i++)
+                    {
+                        T t = tArr[i];
+                        for (int v = 0; v < valCol.Length; v++)
+                        {
+                            object tVal = valCol[v];
+                            if (t.ToString().Equals(tVal.ToString()))
+                            {
+                                return t;
+                            }
+                        }
+                    }
+                    break;
+                case false:
+
+                    for (int i = 0; i < tArr.Length; i++)
+                    {
+                        T t = tArr[i];
+                        var tStr = t.ToString();
+                        if (tStr.Equals(val))
+                        {
+                            return t;
+                        }
+                    }
+                    break;
             }
             return default;
         }
-        public T GetNonAttEnumFromAttEnums<T>(Enum attributedEnum, Type matchingAttributeType) where T : Enum
+
+        public T[] GetNonAttEnumsFromAttEnum<T>(Enum attributedEnum, Type matchingAttributeType) where T: Enum
         {
-            object[] val = GetAttributeValues<object>(attributedEnum, matchingAttributeType);
-            T[] tArr = GetEnumValues<T>();
-            for (int i = 0; i < tArr.Length; i++)
+            object val = GetAttributeValue<object>(attributedEnum, matchingAttributeType);
+
+            var list = new List<T>(GetEnumValues<T>());
+
+            object[] valArr = ((IEnumerable)val).Cast<object>().ToArray();
+
+            if (!valArr[0].GetType().IsEnum)
+                throw new ArgumentException(matchingAttributeType.Name + " must be array of Enum values!");
+
+            for (int i1 = list.Count - 1; i1 >= 0; i1--)
             {
-                T t = tArr[i];
-                var tStr = t.ToString();
-                if (val.Contains(tStr))
+                bool checker = false;
+                T t = list[i1];
+
+                for (int i2 = 0; i2 < valArr.Length; i2++)
                 {
-                    return t;
+                    object v = valArr[i2];
+                    if (v.Equals(t))
+                        checker = true;
                 }
+                if (!checker)
+                    list.Remove(t);
             }
-            return default;
+
+            return list.ToArray();
         }
 
         #endregion
@@ -146,6 +208,21 @@ namespace MG.Attributes
             else
                 throw new ArgumentException(atts.Length + " attributes matching the type '" + typeof(T).FullName + "' were found!");
         }
+
+        internal protected T Cast<T>(object o) => (T)o;
+
+        internal protected object LoopThroughDynamic<T>(T[] collection, object valToCheck)
+        {
+            foreach (object o in collection)
+            {
+                if (o.Equals(valToCheck))
+                {
+                    return o;
+                }
+            }
+            return null;
+        }
+
         private protected T GetAttribute<T>(FieldInfo fi) where T : Attribute, IAttribute =>
             fi.GetCustomAttribute<T>(false);
 
@@ -164,12 +241,27 @@ namespace MG.Attributes
             return tArr;
         }
 
+        private protected const string GenericAttsGetMethod = "GetAttribute";
         private protected object InvokeGenericGetAtts(Enum e, Type attType)
         {
             FieldInfo fi = GetFieldInfo(e);
-            MethodInfo mi = GetType().GetMethod(
-                "GetAttributes", BindingFlags.Instance | BindingFlags.NonPublic).MakeGenericMethod(attType);
-            return mi.Invoke(this, new object[2] { fi, false });
+            Type t = GetType();
+
+            MethodInfo mi = t.GetMethod(GenericAttsGetMethod, BindingFlags.Instance | BindingFlags.NonPublic);
+            MethodInfo mgm = mi.MakeGenericMethod(attType);
+            object outObj = null;
+            try
+            {
+                outObj = mgm.Invoke(this, new object[1] { fi });
+            }
+            catch (TargetInvocationException)
+            {
+            }
+            catch (Exception genEx)
+            {
+                throw new GenericMethodException(attType, GenericAttsGetMethod, e, genEx.InnerException);
+            }
+            return outObj;
         }
 
         #endregion
