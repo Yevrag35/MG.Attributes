@@ -30,6 +30,18 @@ namespace MG.Attributes
             return att.Name;
         }
 
+        public T[] GetEnumValues<T>() where T : Enum
+        {
+            Array arr = typeof(T).GetEnumValues();
+            var tArr = new T[arr.Length];
+            for (int i = 0; i < arr.Length; i++)
+            {
+                var val = (T)arr.GetValue(i);
+                tArr[i] = val;
+            }
+            return tArr;
+        }
+
         // This 'GetAttributeValue<T>' & 'GetAttributeValues<T>' methods should be used when multiple 'MG.Attributes.Interfaces.IAttribute'
         // attributes on the provided Enum value are present.  Use the 'T' parameter to specify the desired 
         // attribute to retrieve the value for.
@@ -42,8 +54,14 @@ namespace MG.Attributes
                 throw new ArgumentException("This method does not support interfaces for the attributeType!");
 
             var castedObj = (IAttribute)InvokeGenericGetAtts(e, attributeType);
-            if (castedObj.ValueIsArray)
+            if (castedObj.ValueIsArray && !castedObj.ValueIsOneItemArray)
                 throw new InvalidOperationException("The casted object has multiple values!");
+
+            else if (castedObj.ValueIsOneItemArray)
+            {
+                object[] objs = ((IEnumerable)castedObj.Value).Cast<object>().ToArray();
+                return (T)objs[0];
+            }
 
             else
                 return (T)castedObj.Value;
@@ -229,17 +247,7 @@ namespace MG.Attributes
         private protected FieldInfo GetFieldInfo(Enum e) =>
             e.GetType().GetField(e.ToString());
 
-        private protected T[] GetEnumValues<T>() where T : Enum
-        {
-            Array arr = typeof(T).GetEnumValues();
-            var tArr = new T[arr.Length];
-            for (int i = 0; i < arr.Length; i++)
-            {
-                var val = (T)arr.GetValue(i);
-                tArr[i] = val;
-            }
-            return tArr;
-        }
+        
 
         private protected const string GenericAttsGetMethod = "GetAttribute";
         private protected object InvokeGenericGetAtts(Enum e, Type attType)
