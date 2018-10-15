@@ -216,7 +216,7 @@ namespace MG.Attributes
 
         #endregion
 
-            #region Private/Backend Methods
+        #region Private/Backend Methods
         internal protected T[] GetAttributes<T>(FieldInfo fi, bool failIfMultipleFound = true) where T : Attribute, IAttribute
         {
             T[] atts = (fi.GetCustomAttributes(typeof(T), false)) as T[];
