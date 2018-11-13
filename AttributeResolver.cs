@@ -227,7 +227,7 @@ namespace MG.Attributes
                 throw new ArgumentException(atts.Length + " attributes matching the type '" + typeof(T).FullName + "' were found!");
         }
 
-        internal protected T Cast<T>(object o) => (T)o;
+        internal protected T Cast<T>(dynamic o) => (T)o;
 
         internal protected object LoopThroughDynamic<T>(T[] collection, object valToCheck)
         {
