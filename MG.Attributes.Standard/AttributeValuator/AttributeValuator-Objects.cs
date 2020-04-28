@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace MG.Attributes
 {
-    public partial class AttributeValuator
+    public partial class AttributeValuator : IValueEnumGetter, IValueMemberGetter
     {
         private MemberInfo GetMemberInfo<T, U>(Expression<Func<T, U>> expression)
         {
