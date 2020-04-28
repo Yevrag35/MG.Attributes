@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MG.Attributes
 {
-    public partial class AttributeValuator
+    public partial class AttributeValuator : IAttributeValueResolver
     {
         public AttributeValuator() { }
     }
