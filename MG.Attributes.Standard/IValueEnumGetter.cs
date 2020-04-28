@@ -16,7 +16,6 @@ namespace MG.Attributes
         /// <typeparam name="T1">The type of the retrieved value.</typeparam>
         /// <typeparam name="T2">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
         /// <param name="enumValue">The specific enumeration value that has the attached <see cref="IValueAttribute"/> attribute.</param>
-        /// <returns></returns>
         T1 GetAttributeValue<T1, T2>(Enum enumValue)
             where T2 : Attribute, IValueAttribute;
 
@@ -27,7 +26,6 @@ namespace MG.Attributes
         /// <typeparam name="T1">The type of the retrieved value.</typeparam>
         /// <typeparam name="T2">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
         /// <param name="enumValue">The specific enumeration value that has the attached <see cref="IValueAttribute"/> attributes.</param>
-        /// <returns></returns>
         IEnumerable<T1> GetAttributeValues<T1, T2>(Enum enumValue)
             where T2 : Attribute, IValueAttribute;
     }

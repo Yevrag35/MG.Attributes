@@ -16,16 +16,27 @@ namespace MG.Attributes
         /// <typeparam name="T1">The type of the underlying value.</typeparam>
         /// <typeparam name="T2">The type of the <see cref="IValueAttribute"/>.</typeparam>
         /// <param name="enumValue">The <see cref="Enum"/> whose value is retrieved.</param>
-        /// <exception cref="AmbiguousMatchException"/>
-        /// <exception cref="InvalidCastException"/>
-        /// <exception cref="NotSupportedException"/>
-        /// <exception cref="TypeLoadException"/>
+        /// <exception cref="AmbiguousMatchException">More than one of the requested attributes was found.</exception>
+        /// <exception cref="InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
+        /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
+        /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
         public T1 GetAttributeValue<T1, T2>(Enum enumValue)
             where T2 : Attribute, IValueAttribute
         {
             T2 attribute = this.GetAttributeFromEnum<T2>(enumValue);
             return attribute.GetAs<T1>();
         }
+
+        /// <summary>
+        /// Retrieves the secondary values from one or multiple <see cref="IValueAttribute"/> attributes attached
+        /// to a single <see cref="Enum"/> value type.
+        /// </summary>
+        /// <typeparam name="T1">The type of the retrieved value.</typeparam>
+        /// <typeparam name="T2">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
+        /// <param name="enumValue">The specific enumeration value that has the attached <see cref="IValueAttribute"/> attributes.</param>
+        /// <exception cref="InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
+        /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
+        /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
         public IEnumerable<T1> GetAttributeValues<T1, T2>(Enum enumValue)
             where T2 : Attribute, IValueAttribute
         {

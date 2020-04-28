@@ -18,7 +18,7 @@ namespace MG.Attributes
         /// <typeparam name="T2">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
         /// <typeparam name="T3">The type of object for the member expression.</typeparam>
         /// <typeparam name="T4">The member type of the expression.</typeparam>
-        /// <param name="memberExpression">The <see cref="Expression"/> pointing to a object's member to search for the attribute.</param>      
+        /// <param name="memberExpression">The <see cref="Expression"/> pointing to a object's member to search for the attribute.</param>
         T1 GetAttributeValue<T1, T2, T3, T4>(Expression<Func<T3, T4>> memberExpression)
             where T2 : Attribute, IValueAttribute;
 
