@@ -10,6 +10,16 @@ namespace MG.Attributes
     {
 
         #region ATTRIBUTES METHODS
+        /// <summary>
+        /// Gets the value from the attributed <see cref="IValueAttribute.Value"/> of the <see cref="Enum"/>.
+        /// </summary>
+        /// <typeparam name="T1">The type of the underlying value.</typeparam>
+        /// <typeparam name="T2">The type of the <see cref="IValueAttribute"/>.</typeparam>
+        /// <param name="enumValue">The <see cref="Enum"/> whose value is retrieved.</param>
+        /// <exception cref="AmbiguousMatchException"/>
+        /// <exception cref="InvalidCastException"/>
+        /// <exception cref="NotSupportedException"/>
+        /// <exception cref="TypeLoadException"/>
         public T1 GetAttributeValue<T1, T2>(Enum enumValue)
             where T2 : Attribute, IValueAttribute
         {
@@ -19,17 +29,20 @@ namespace MG.Attributes
         public IEnumerable<T1> GetAttributeValues<T1, T2>(Enum enumValue)
             where T2 : Attribute, IValueAttribute
         {
-            T2 attribute = this.GetAttributeFromEnum<T2>(enumValue);
-            if (!attribute.ValueIsString() && attribute.Value is IEnumerable ienum)
+            IEnumerable<T2> attributes = this.GetAttributesFromEnum<T2>(enumValue);
+            foreach (T2 attribute in attributes)
             {
-                foreach (T1 item in ienum)
+                if (!attribute.ValueIsString() && attribute.Value is IEnumerable ienum)
                 {
-                    yield return item;
+                    foreach (T1 item in ienum)
+                    {
+                        yield return item;
+                    }
                 }
-            }
-            else
-            {
-                yield return attribute.GetAs<T1>();
+                else
+                {
+                    yield return attribute.GetAs<T1>();
+                }
             }
         }
         public bool TryGetAttributeValue<T1, T2>(Enum enumValue, out T1 outValue)
@@ -99,7 +112,12 @@ namespace MG.Attributes
         private T3 GetAttributeFromEnum<T3>(Enum e)
             where T3 : Attribute, IValueAttribute
         {
-            return this.GetFieldInfo(e).GetCustomAttribute<T3>();
+            return this.GetFieldInfo(e)?.GetCustomAttribute<T3>();
+        }
+        private IEnumerable<T3> GetAttributesFromEnum<T3>(Enum e)
+            where T3 : Attribute, IValueAttribute
+        {
+            return this.GetFieldInfo(e)?.GetCustomAttributes<T3>();
         }
         private FieldInfo GetFieldInfo(Enum e) => e.GetType().GetRuntimeField(e.ToString());
     }

@@ -10,6 +10,7 @@ namespace AttributeTesting
         private AttributeValuator _valuator { get; } = new AttributeValuator();
 
         [SecondValue("HiddenMessage")]
+        [AnotherSecond("AnotherHiddenMessage")]
         public string JustATest { get; } = "LookAtMe";
 
         public IEnumerable<int> GetByEnum(MyEnum e)
@@ -23,15 +24,17 @@ namespace AttributeTesting
 
             return _valuator.GetEnumFromValues<int, MyEnum, SecondValueAttribute>(nums);
         }
-        public string GetHiddenMessage()
-        {
-            return _valuator.GetAttributeValue<string, SecondValueAttribute, TestClass, string>(x => x.JustATest);
-        }
     }
 
     public enum MyEnum
     {
         [SecondValue(new int[2] { 23, 43 })]
+        [AnotherSecond(new int[3] { 1, 2, 3 })]
         Numbers
+    }
+
+    public class AnotherSecondAttribute : SecondValueAttribute
+    {
+        public AnotherSecondAttribute(object val) : base(val) { }
     }
 }
