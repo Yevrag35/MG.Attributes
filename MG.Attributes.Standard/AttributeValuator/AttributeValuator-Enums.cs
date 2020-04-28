@@ -56,45 +56,104 @@ namespace MG.Attributes
                 }
             }
         }
-        public bool TryGetAttributeValue<T1, T2>(Enum enumValue, out T1 outValue)
+
+        public bool TryGetAttributeValue<T1, T2>(Enum enumValue, out T1 outValue, out Exception caughtException)
             where T2 : Attribute, IValueAttribute
         {
-            T2 attribute = this.GetAttributeFromEnum<T2>(enumValue);
-            outValue = attribute.GetAs<T1>();
-            return outValue != null;
+            caughtException = null;
+            outValue = default;
+            try
+            {
+                outValue = this.GetAttributeValue<T1, T2>(enumValue);
+                return outValue != null;
+            }
+            catch (Exception e)
+            {
+                caughtException = e;
+                return false;
+            }
         }
 
         #endregion
 
         #region ENUM METHODS
-        public T2 GetEnumFromValue<T1, T2, T3>(T1 objVal)
+        /// <summary>
+        /// Get the enum value that has an <see cref="IValueAttribute"/> attribute with the matching value.
+        /// </summary>
+        /// <typeparam name="T1">The type of the value that is supplied.</typeparam>
+        /// <typeparam name="T2">The type of <see cref="Enum"/> that will be returned.</typeparam>
+        /// <typeparam name="T3">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
+        /// <param name="objValue">The object that <see cref="IValueAttribute.Value"/> should equal.</param>
+        /// <exception cref="AmbiguousMatchException">More than one of the requested attributes was found.</exception>
+        /// <exception cref="ArgumentNullException">The source or predicate is null.</exception>
+        /// <exception cref="InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
+        /// <exception cref="InvalidOperationException">
+        ///     The method is invoked by reflection in a reflection-only context, -or-enumType
+        ///     is a type from an assembly loaded in a reflection-only context.
+        ///     
+        ///     OR
+        ///     
+        ///     No element satisfies the condition in predicate.-or-More than one element satisfies
+        ///     the condition in predicate.-or-The source sequence is empty.
+        /// </exception>
+        /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
+        /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
+        public T2 GetEnumFromValue<T1, T2, T3>(T1 objValue)
             where T2 : Enum
             where T3 : Attribute, IValueAttribute
         {
             return GetEnumValues<T2>()
                 .Single(att =>
-                    GetAttributeValue<T1, T3>(att).Equals(objVal));
+                    GetAttributeValue<T1, T3>(att).Equals(objValue));
         }
-        public IEnumerable<T2> GetEnumsFromValues<T1, T2, T3>(IEnumerable<T1> objVals)
+
+        /// <summary>
+        /// Get the enum values that have attached an <see cref="IValueAttribute"/> attribute which contains any overlapping 
+        /// items of the specified collection.
+        /// </summary>
+        /// <typeparam name="T1">The type of the collection's items.</typeparam>
+        /// <typeparam name="T2">The type of <see cref="Enum"/> that will be returned.</typeparam>
+        /// <typeparam name="T3">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
+        /// <param name="objValues">The collection of items the <see cref="IValueAttribute.Value"/> should equal.</param>
+        /// <exception cref="InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
+        /// <exception cref="InvalidOperationException">
+        ///     The method is invoked by reflection in a reflection-only context, -or-enumType
+        ///     is a type from an assembly loaded in a reflection-only context.
+        /// </exception>
+        /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
+        /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
+        public IEnumerable<T2> GetEnumsFromValues<T1, T2, T3>(IEnumerable<T1> objValues)
             where T2 : Enum
             where T3 : Attribute, IValueAttribute
         {
             return GetEnumValues<T2>()
-                .Where(att =>
+                ?.Where(att =>
                     GetAttributeValues<T1, T3>(att)
                         .Any(item =>
-                            objVals.Contains(item)));
+                            objValues.Contains(item)));
         }
+
         /// <summary>
-        /// Get the enum value that has the <see cref="IValueAttribute"/> with the matching collection
+        /// Get the enum value that has an <see cref="IValueAttribute"/> attribute with the matching collection.
         /// of values.
         /// </summary>
         /// <typeparam name="T1">The type of the collection's items.</typeparam>
-        /// <typeparam name="T2">The type of <see cref="Enum"/> that will be searched.</typeparam>
-        /// <typeparam name="T3">The type of </typeparam>
-        /// <param name="objVals">The collection of items the <see cref="IValueAttribute.Value"/> should equal.</param>
-        /// <exception cref="InvalidOperationException"/>
-        public T2 GetEnumFromValues<T1, T2, T3>(IEnumerable<T1> objVals)
+        /// <typeparam name="T2">The type of <see cref="Enum"/> that will be returned.</typeparam>
+        /// <typeparam name="T3">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
+        /// <param name="objValues">The collection of items the <see cref="IValueAttribute.Value"/> should equal.</param>
+        /// <exception cref="InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
+        /// <exception cref="InvalidOperationException">
+        ///     The method is invoked by reflection in a reflection-only context, -or-enumType
+        ///     is a type from an assembly loaded in a reflection-only context.
+        ///     
+        ///     OR
+        ///     
+        ///     No element satisfies the condition in predicate.-or-More than one element satisfies
+        ///     the condition in predicate.-or-The source sequence is empty.
+        /// </exception>
+        /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
+        /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
+        public T2 GetEnumFromValues<T1, T2, T3>(IEnumerable<T1> objValues)
             where T2 : Enum
             where T3 : Attribute, IValueAttribute
         {
@@ -102,7 +161,7 @@ namespace MG.Attributes
                 .Single(att =>
                     GetAttributeValues<T1, T3>(att)
                         .All(item =>
-                            objVals.Contains(item)));
+                            objValues.Contains(item)));
         }
 
         #endregion
