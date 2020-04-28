@@ -68,7 +68,7 @@ namespace MG.Attributes
         /// <typeparam name="T1">The type of the collection's items.</typeparam>
         /// <typeparam name="T2">The type of <see cref="Enum"/> that will be searched.</typeparam>
         /// <typeparam name="T3">The type of </typeparam>
-        /// <param name="objVals"></param>
+        /// <param name="objVals">The collection of items the <see cref="IValueAttribute.Value"/> should equal.</param>
         /// <exception cref="InvalidOperationException"/>
         public T2 GetEnumFromValues<T1, T2, T3>(IEnumerable<T1> objVals)
             where T2 : Enum

@@ -9,7 +9,10 @@ namespace AttributeTesting
     {
         private AttributeValuator _valuator { get; } = new AttributeValuator();
 
-        public IEnumerable<int> Get(MyEnum e)
+        [SecondValue("HiddenMessage")]
+        public string JustATest { get; } = "LookAtMe";
+
+        public IEnumerable<int> GetByEnum(MyEnum e)
         {
             return _valuator.GetAttributeValues<int, SecondValueAttribute>(e);
         }
@@ -19,6 +22,10 @@ namespace AttributeTesting
                 return null;
 
             return _valuator.GetEnumFromValues<int, MyEnum, SecondValueAttribute>(nums);
+        }
+        public string GetHiddenMessage()
+        {
+            return _valuator.GetAttributeValue<string, SecondValueAttribute, TestClass, string>(x => x.JustATest);
         }
     }
 
