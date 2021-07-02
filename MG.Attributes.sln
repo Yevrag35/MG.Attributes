@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MG.Attributes", "MG.Attributes.csproj", "{8321CF73-DDFB-43B6-AC55-0A998E078B86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MG.Attributes-Old", "MG.Attributes-Old\MG.Attributes-Old.csproj", "{8321CF73-DDFB-43B6-AC55-0A998E078B86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MG.Attributes.Standard", "MG.Attributes.Standard\MG.Attributes.Standard.csproj", "{F4F46AED-46D7-4903-91EC-B3020F806EBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttributeTesting", "AttributeTesting\AttributeTesting.csproj", "{F12B3648-F7E2-47A8-86F8-4C145C793CC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{8321CF73-DDFB-43B6-AC55-0A998E078B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8321CF73-DDFB-43B6-AC55-0A998E078B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8321CF73-DDFB-43B6-AC55-0A998E078B86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4F46AED-46D7-4903-91EC-B3020F806EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4F46AED-46D7-4903-91EC-B3020F806EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4F46AED-46D7-4903-91EC-B3020F806EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4F46AED-46D7-4903-91EC-B3020F806EBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F12B3648-F7E2-47A8-86F8-4C145C793CC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F12B3648-F7E2-47A8-86F8-4C145C793CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F12B3648-F7E2-47A8-86F8-4C145C793CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F12B3648-F7E2-47A8-86F8-4C145C793CC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

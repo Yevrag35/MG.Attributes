@@ -262,7 +262,5 @@ __pycache__/
 DebugScript\.ps1
 
 desktop\.ini
+*.pfx
 
-MG\.Sonarr-Core/\.vscode/launch\.json
-
-MG\.Sonarr-Core/\.vscode/tasks\.json
