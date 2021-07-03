@@ -86,5 +86,14 @@ namespace MG.Attributes.Tests
             Assert.NotEqual(123.ToString(), another);
             Assert.NotNull(caughtYa);
         }
+
+        [Fact]
+        public void GetEnumFromValue()
+        {
+            var eval = new AttributeValuator();
+
+            Greetings e = eval.GetEnumFromValue<Greetings, AdditionalValueAttribute>(123);
+            Assert.Equal(Greetings.Hi, e);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace MG.Attributes
@@ -81,7 +82,7 @@ namespace MG.Attributes
         /// Get the enum value that has an <see cref="IValueAttribute"/> attribute with the matching value.
         /// </summary>
         /// <typeparam name="TInput">The type of the value that is supplied.</typeparam>
-        /// <typeparam name="TOutput">The type of <see cref="Enum"/> that will be returned.</typeparam>
+        /// <typeparam name="TEnum">The type of <see cref="Enum"/> that will be returned.</typeparam>
         /// <typeparam name="TAtt">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
         /// <param name="objValue">The object that <see cref="IValueAttribute.Value"/> should equal.</param>
         /// <exception cref="AmbiguousMatchException">More than one of the requested attributes was found.</exception>
@@ -98,13 +99,24 @@ namespace MG.Attributes
         /// </exception>
         /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
         /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
-        public TOutput GetEnumFromValue<TInput, TOutput, TAtt>(TInput objValue)
-            where TOutput : Enum
+        public TEnum GetEnumFromValue<TEnum, TAtt>(object objValue)
+            where TEnum : Enum
             where TAtt : Attribute, IValueAttribute
         {
-            return GetEnumValues<TOutput>()
-                .Single(att =>
-                    GetAttributeValue<TInput, TAtt>(att).Equals(objValue));
+            IEnumerable<(TAtt, TEnum)> attsAndEnums = this
+                .GetAttributesFromAllEnums<TAtt, TEnum>();
+
+            TEnum e = default;
+
+            foreach (var tuple in attsAndEnums)
+            {
+                if (tuple.Item1.Value.Equals(objValue))
+                {
+                    e = tuple.Item2;
+                }
+            }
+
+            return e;
         }
 
         /// <summary>
@@ -180,14 +192,26 @@ namespace MG.Attributes
         #endregion
 
         private TAtt GetAttributeFromEnum<TAtt>(Enum e)
-            where TAtt : Attribute, IValueAttribute
+            where TAtt : Attribute
         {
             return this.GetFieldInfo(e)?.GetCustomAttribute<TAtt>();
         }
         private IEnumerable<TAtt> GetAttributesFromEnum<TAtt>(Enum e)
-            where TAtt : Attribute, IValueAttribute
+            where TAtt : Attribute
         {
             return this.GetFieldInfo(e)?.GetCustomAttributes<TAtt>();
+        }
+        private IEnumerable<(TAtt, TEnum)> GetAttributesFromAllEnums<TAtt, TEnum>()
+            where TAtt : Attribute
+            where TEnum : Enum
+        {
+            foreach (TEnum e in Enum.GetValues(typeof(TEnum)))
+            {
+                foreach (TAtt att in this.GetAttributesFromEnum<TAtt>(e))
+                {
+                    yield return (att, e);
+                }
+            }
         }
         private FieldInfo GetFieldInfo(Enum e) => e.GetType().GetRuntimeField(e.ToString());
     }
