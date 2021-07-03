@@ -22,7 +22,7 @@ namespace MG.Attributes
         ///     Dynamics are not supported.
         /// </remarks>
         /// <typeparam name="T">
-        ///     The type to cast <see cref="IValueAttribute.Value"/>'s 
+        ///     The type to cast <see cref="Value"/>'s 
         ///     property as.
         /// </typeparam>
         /// <exception cref="InvalidCastException">Thrown when the object value
