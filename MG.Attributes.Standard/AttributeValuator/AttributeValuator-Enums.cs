@@ -13,58 +13,58 @@ namespace MG.Attributes
         /// <summary>
         /// Gets the value from the attributed <see cref="IValueAttribute.Value"/> of the <see cref="Enum"/>.
         /// </summary>
-        /// <typeparam name="T1">The type of the underlying value.</typeparam>
-        /// <typeparam name="T2">The type of the <see cref="IValueAttribute"/>.</typeparam>
+        /// <typeparam name="TOutput">The type of the underlying value.</typeparam>
+        /// <typeparam name="TAtt">The type of the <see cref="IValueAttribute"/>.</typeparam>
         /// <param name="enumValue">The <see cref="Enum"/> whose value is retrieved.</param>
         /// <exception cref="AmbiguousMatchException">More than one of the requested attributes was found.</exception>
         /// <exception cref="InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
         /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
         /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
-        public T1 GetAttributeValue<T1, T2>(Enum enumValue)
-            where T2 : Attribute, IValueAttribute
+        public TOutput GetAttributeValue<TOutput, TAtt>(Enum enumValue)
+            where TAtt : Attribute, IValueAttribute
         {
-            T2 attribute = this.GetAttributeFromEnum<T2>(enumValue);
-            return attribute.GetAs<T1>();
+            TAtt attribute = this.GetAttributeFromEnum<TAtt>(enumValue);
+            return attribute.GetAs<TOutput>();
         }
 
         /// <summary>
         /// Retrieves the secondary values from one or multiple <see cref="IValueAttribute"/> attributes attached
         /// to a single <see cref="Enum"/> value type.
         /// </summary>
-        /// <typeparam name="T1">The type of the retrieved value.</typeparam>
-        /// <typeparam name="T2">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
+        /// <typeparam name="TOutput">The type of the retrieved value.</typeparam>
+        /// <typeparam name="TAtt">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
         /// <param name="enumValue">The specific enumeration value that has the attached <see cref="IValueAttribute"/> attributes.</param>
         /// <exception cref="InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
         /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
         /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
-        public IEnumerable<T1> GetAttributeValues<T1, T2>(Enum enumValue)
-            where T2 : Attribute, IValueAttribute
+        public IEnumerable<TOutput> GetAttributeValues<TOutput, TAtt>(Enum enumValue)
+            where TAtt : Attribute, IValueAttribute
         {
-            IEnumerable<T2> attributes = this.GetAttributesFromEnum<T2>(enumValue);
-            foreach (T2 attribute in attributes)
+            IEnumerable<TAtt> attributes = this.GetAttributesFromEnum<TAtt>(enumValue);
+            foreach (TAtt attribute in attributes)
             {
                 if (!attribute.ValueIsString() && attribute.Value is IEnumerable ienum)
                 {
-                    foreach (T1 item in ienum)
+                    foreach (TOutput item in ienum)
                     {
                         yield return item;
                     }
                 }
                 else
                 {
-                    yield return attribute.GetAs<T1>();
+                    yield return attribute.GetAs<TOutput>();
                 }
             }
         }
 
-        public bool TryGetAttributeValue<T1, T2>(Enum enumValue, out T1 outValue, out Exception caughtException)
-            where T2 : Attribute, IValueAttribute
+        public bool TryGetAttributeValue<TOutput, TAtt>(Enum enumValue, out TOutput outValue, out Exception caughtException)
+            where TAtt : Attribute, IValueAttribute
         {
             caughtException = null;
             outValue = default;
             try
             {
-                outValue = this.GetAttributeValue<T1, T2>(enumValue);
+                outValue = this.GetAttributeValue<TOutput, TAtt>(enumValue);
                 return outValue != null;
             }
             catch (Exception e)
@@ -80,9 +80,9 @@ namespace MG.Attributes
         /// <summary>
         /// Get the enum value that has an <see cref="IValueAttribute"/> attribute with the matching value.
         /// </summary>
-        /// <typeparam name="T1">The type of the value that is supplied.</typeparam>
-        /// <typeparam name="T2">The type of <see cref="Enum"/> that will be returned.</typeparam>
-        /// <typeparam name="T3">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
+        /// <typeparam name="TInput">The type of the value that is supplied.</typeparam>
+        /// <typeparam name="TOutput">The type of <see cref="Enum"/> that will be returned.</typeparam>
+        /// <typeparam name="TAtt">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
         /// <param name="objValue">The object that <see cref="IValueAttribute.Value"/> should equal.</param>
         /// <exception cref="AmbiguousMatchException">More than one of the requested attributes was found.</exception>
         /// <exception cref="ArgumentNullException">The source or predicate is null.</exception>
@@ -98,22 +98,22 @@ namespace MG.Attributes
         /// </exception>
         /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
         /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
-        public T2 GetEnumFromValue<T1, T2, T3>(T1 objValue)
-            where T2 : Enum
-            where T3 : Attribute, IValueAttribute
+        public TOutput GetEnumFromValue<TInput, TOutput, TAtt>(TInput objValue)
+            where TOutput : Enum
+            where TAtt : Attribute, IValueAttribute
         {
-            return GetEnumValues<T2>()
+            return GetEnumValues<TOutput>()
                 .Single(att =>
-                    GetAttributeValue<T1, T3>(att).Equals(objValue));
+                    GetAttributeValue<TInput, TAtt>(att).Equals(objValue));
         }
 
         /// <summary>
         /// Get the enum values that have attached an <see cref="IValueAttribute"/> attribute which contains any overlapping 
         /// items of the specified collection.
         /// </summary>
-        /// <typeparam name="T1">The type of the collection's items.</typeparam>
-        /// <typeparam name="T2">The type of <see cref="Enum"/> that will be returned.</typeparam>
-        /// <typeparam name="T3">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
+        /// <typeparam name="TInput">The type of the collection's items.</typeparam>
+        /// <typeparam name="TOutput">The type of <see cref="Enum"/> that will be returned.</typeparam>
+        /// <typeparam name="TAtt">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
         /// <param name="objValues">The collection of items the <see cref="IValueAttribute.Value"/> should equal.</param>
         /// <exception cref="InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
         /// <exception cref="InvalidOperationException">
@@ -122,13 +122,13 @@ namespace MG.Attributes
         /// </exception>
         /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
         /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
-        public IEnumerable<T2> GetEnumsFromValues<T1, T2, T3>(IEnumerable<T1> objValues)
-            where T2 : Enum
-            where T3 : Attribute, IValueAttribute
+        public IEnumerable<TOutput> GetEnumsFromValues<TInput, TOutput, TAtt>(IEnumerable<TInput> objValues)
+            where TOutput : Enum
+            where TAtt : Attribute, IValueAttribute
         {
-            return GetEnumValues<T2>()
+            return GetEnumValues<TOutput>()
                 ?.Where(att =>
-                    GetAttributeValues<T1, T3>(att)
+                    GetAttributeValues<TInput, TAtt>(att)
                         .Any(item =>
                             objValues.Contains(item)));
         }
@@ -137,9 +137,9 @@ namespace MG.Attributes
         /// Get the enum value that has an <see cref="IValueAttribute"/> attribute with the matching collection.
         /// of values.
         /// </summary>
-        /// <typeparam name="T1">The type of the collection's items.</typeparam>
-        /// <typeparam name="T2">The type of <see cref="Enum"/> that will be returned.</typeparam>
-        /// <typeparam name="T3">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
+        /// <typeparam name="TInput">The type of the collection's items.</typeparam>
+        /// <typeparam name="TOutput">The type of <see cref="Enum"/> that will be returned.</typeparam>
+        /// <typeparam name="TAtt">The type of <see cref="IValueAttribute"/> that is attached.</typeparam>
         /// <param name="objValues">The collection of items the <see cref="IValueAttribute.Value"/> should equal.</param>
         /// <exception cref="InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
         /// <exception cref="InvalidOperationException">
@@ -153,13 +153,13 @@ namespace MG.Attributes
         /// </exception>
         /// <exception cref="NotSupportedException">Element is not a constructor, method, property, event, type, or field.</exception>
         /// <exception cref="TypeLoadException">A custom attribute type cannot be loaded.</exception>
-        public T2 GetEnumFromValues<T1, T2, T3>(IEnumerable<T1> objValues)
-            where T2 : Enum
-            where T3 : Attribute, IValueAttribute
+        public TOutput GetEnumFromValues<TInput, TOutput, TAtt>(IEnumerable<TInput> objValues)
+            where TOutput : Enum
+            where TAtt : Attribute, IValueAttribute
         {
-            return GetEnumValues<T2>()
+            return GetEnumValues<TOutput>()
                 .Single(att =>
-                    GetAttributeValues<T1, T3>(att)
+                    GetAttributeValues<TInput, TAtt>(att)
                         .All(item =>
                             objValues.Contains(item)));
         }
@@ -168,26 +168,26 @@ namespace MG.Attributes
 
 
         #region ENUM VALUES
-        private IEnumerable<T> GetEnumValues<T>() where T : Enum
+        private IEnumerable<TEnum> GetEnumValues<TEnum>() where TEnum : Enum
         {
-            return Enum.GetValues(typeof(T)).Cast<T>();
+            return Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
         }
-        private IEnumerable<T> GetEnumValues<T>(T enumValue) where T : Enum
+        private IEnumerable<TEnum> GetEnumValues<TEnum>(TEnum enumValue) where TEnum : Enum
         {
-            return Enum.GetValues(typeof(T)).Cast<T>();
+            return Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
         }
 
         #endregion
 
-        private T3 GetAttributeFromEnum<T3>(Enum e)
-            where T3 : Attribute, IValueAttribute
+        private TAtt GetAttributeFromEnum<TAtt>(Enum e)
+            where TAtt : Attribute, IValueAttribute
         {
-            return this.GetFieldInfo(e)?.GetCustomAttribute<T3>();
+            return this.GetFieldInfo(e)?.GetCustomAttribute<TAtt>();
         }
-        private IEnumerable<T3> GetAttributesFromEnum<T3>(Enum e)
-            where T3 : Attribute, IValueAttribute
+        private IEnumerable<TAtt> GetAttributesFromEnum<TAtt>(Enum e)
+            where TAtt : Attribute, IValueAttribute
         {
-            return this.GetFieldInfo(e)?.GetCustomAttributes<T3>();
+            return this.GetFieldInfo(e)?.GetCustomAttributes<TAtt>();
         }
         private FieldInfo GetFieldInfo(Enum e) => e.GetType().GetRuntimeField(e.ToString());
     }
