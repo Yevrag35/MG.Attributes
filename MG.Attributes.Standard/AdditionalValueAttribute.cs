@@ -66,7 +66,7 @@ namespace MG.Attributes
             this.BackingValueType = value.GetType();
             this.BackingValue = value;
 
-            if (this.TryGetAsCollection(value, out ICollection icol))
+            if (IsCollection(value, out ICollection icol))
             {
                 this.BackingValueAsCollection = icol;
             }
@@ -302,6 +302,20 @@ namespace MG.Attributes
         protected virtual Type GetValueType(object value)
         {
             return value.GetType();
+        }
+
+        #endregion
+
+        #region PRVIATE METHODS
+        private static bool IsCollection(object value, out ICollection icol)
+        {
+            icol = null;
+            if (value is ICollection col)
+            {
+                icol = col;
+            }
+
+            return null != icol;
         }
 
         #endregion
