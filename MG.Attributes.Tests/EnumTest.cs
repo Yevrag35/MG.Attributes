@@ -32,6 +32,13 @@ namespace MG.Attributes.Tests
         }
 
         [Fact]
-        public void GetEnums
+        public void GetEnumsFromValue()
+        {
+            var eval = new AttributeValuator();
+
+            Greetings[] output = eval.GetEnumsFromValue<Greetings, AdditionalValueAttribute>(123);
+            Assert.Equal(2, output.Length);
+            Assert.True(output.All(x => x == Greetings.Hi || x == Greetings.Yo));
+        }
     }
 }

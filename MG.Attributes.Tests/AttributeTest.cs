@@ -18,7 +18,7 @@ namespace MG.Attributes.Tests
         };
 
         [Fact]
-        public void GetAttributeValue()
+        public void GetFirstAttributeValue()
         {
             var eval = new AttributeValuator();
 
@@ -34,7 +34,7 @@ namespace MG.Attributes.Tests
             string[] strings = eval.GetAttributeValue<string[], AdditionalValueAttribute>(Greetings.Hello);
             Assert.Equal(_testStrings1, strings);
 
-            string[] maybe = eval.GetAttributeValues<string, AdditionalValueAttribute>(Greetings.Hello).ToArray();
+            string[] maybe = eval.GetAttributeValues<AdditionalValueAttribute, string>(Greetings.Hello);
             Assert.Equal(_testStrings1.Length, maybe.Length);
             for (int i = 0; i < _testStrings1.Length; i++)
             {
@@ -47,7 +47,7 @@ namespace MG.Attributes.Tests
         {
             var eval = new AttributeValuator();
 
-            string[] strings = eval.GetAttributeValues<string, AdditionalValueAttribute>(Greetings.GoodMorning).ToArray();
+            string[] strings = eval.GetAttributeValues<AdditionalValueAttribute, string>(Greetings.GoodMorning);
 
             Assert.Equal(_testStrings1.Length, strings.Length);
             Assert.Equal(_testStrings1, strings);
@@ -59,7 +59,7 @@ namespace MG.Attributes.Tests
             var eval = new AttributeValuator();
             string[] staticArray = Enumerable.Concat(_testStrings1, _testStrings2).ToArray();
 
-            string[] strings = eval.GetAttributeValues<string, AdditionalValueAttribute>(Greetings.GoodAfternoon).ToArray();
+            string[] strings = eval.GetAttributeValues<AdditionalValueAttribute, string>(Greetings.GoodAfternoon);
 
             Assert.Equal(staticArray.Length, strings.Length);
             for (int i = 0; i < staticArray.Length; i++)

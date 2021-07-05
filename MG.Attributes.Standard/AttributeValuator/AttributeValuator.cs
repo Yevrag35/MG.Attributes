@@ -2,7 +2,7 @@
 
 namespace MG.Attributes
 {
-    public partial class AttributeValuator : IAttributeValueResolver
+    public partial class AttributeValuator : IValueRecaller
     {
         public AttributeValuator() { }
     }

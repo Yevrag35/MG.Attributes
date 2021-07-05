@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace MG.Attributes
 {
@@ -14,8 +16,14 @@ namespace MG.Attributes
     ///     by <see cref="AttributeValuator"/> or another class implementing <see cref="IAttributeValueResolver"/>.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Enum | AttributeTargets.Property, AllowMultiple = true)]
-    public class AdditionalValueAttribute : Attribute, IValueAttribute, IValueCollection
+    public class AdditionalValueAttribute : Attribute, IValueAttribute, IAttributeValueCollection, IComparable<AdditionalValueAttribute>
     {
+        #region PRIVATE FIELDS/CONSTANTS
+        //private int _valueCount => this.BackingValue is null ? 0 : 1;
+        private int _colCount => (this.BackingValueAsCollection?.Count).GetValueOrDefault();
+
+        #endregion
+
         #region PROTECTED OVERRIDABLE PROPERTIES
         protected virtual object BackingValue { get; set; }
         protected virtual ICollection BackingValueAsCollection { get; set; }
@@ -37,12 +45,7 @@ namespace MG.Attributes
         ///     The number of values held by the attribute.  If the value does not implement <see cref="ICollection"/> nor 
         ///     <see cref="IEnumerable"/>, 1 is returned instead.
         /// </returns>
-        public virtual int Count
-        {
-            get => null != this.BackingValueAsCollection
-                ? this.BackingValueAsCollection.Count
-                : 1;
-        }
+        public virtual int Count => _colCount;
         
         /// <summary>
         /// The resolved type of the held object by the <see cref="AdditionalValueAttribute"/>.
@@ -70,11 +73,46 @@ namespace MG.Attributes
             {
                 this.BackingValueAsCollection = icol;
             }
+            else if (value is IEnumerable ienum && !(value is string))
+            {
+                this.BackingValueAsCollection = ienum.Cast<object>().ToArray();
+            }
+            else
+            {
+                this.BackingValueAsCollection = new object[1] { value };
+            }
         }
 
         #endregion
 
         #region METHODS
+
+        public int CompareTo(AdditionalValueAttribute other)
+        {
+            if (this.BackingValueType.GetTypeInfo().IsValueType && other.BackingValueType.GetTypeInfo().IsValueType)
+                return Comparer<ValueType>.Default.Compare((ValueType)this.GetValue(), (ValueType)other.GetValue());
+
+            else if (this.BackingValueType == other.BackingValueType)
+            {
+                Type genCtor = typeof(Comparer<>).MakeGenericType(this.BackingValueType);
+                PropertyInfo pi = genCtor.GetRuntimeProperty(nameof(Comparer<object>.Default));
+                object defaultComparer = pi.GetValue(null);
+
+                MethodInfo compareMeth = defaultComparer.GetType().GetRuntimeMethod(nameof(Comparer<object>.Default.Compare),
+                    new Type[] { this.BackingValueType, this.BackingValueType });
+
+                object result = compareMeth.Invoke(defaultComparer, new object[] { this.GetValue(), other.GetValue() });
+                if (result is int number)
+                    return number;
+
+                else
+                    throw new InvalidOperationException();
+            }
+            else
+            {
+                return Comparer<object>.Default.Compare(this.GetValue(), other.GetValue());
+            }
+        }
 
         /// <summary>
         /// Returns the held value of the <see cref="AdditionalValueAttribute"/> and casts it to the 
@@ -108,15 +146,7 @@ namespace MG.Attributes
         /// </exception>
         public virtual ICollection GetValueCollection()
         {
-            if (null != this.BackingValueAsCollection)
-                return this.BackingValueAsCollection;
-
-            else if (this.BackingValue is IEnumerable ienum)
-            {
-                return ienum.Cast<object>()?.ToArray();
-            }
-            else
-                return null;
+            return this.BackingValueAsCollection;
         }
 
         /// <summary>
@@ -124,24 +154,29 @@ namespace MG.Attributes
         /// </summary>
         /// <typeparam name="T">The <see cref="Type"/> to cast the result of <see cref="GetValue()"/>.</typeparam>
         /// <returns></returns>
-        /// <exception cref="InvalidCastException">
-        ///     Thrown when the object value
-        ///     can't be explicitly cast as the given type.  
-        /// </exception>
-        public virtual IEnumerable<T> GetValues<T>()
+        public virtual T[] GetValues<T>()
         {
-            if (null != this.BackingValueAsCollection)
+            T[] tArr = new T[0];
+            if (this.BackingValueAsCollection?.Count > 0)
             {
-                foreach (T item in this.BackingValueAsCollection)
+                tArr = this.BackingValueAsCollection.OfType<T>().ToArray();
+            }
+            else if (this.Count > 0)
+            {
+                try
                 {
-                    yield return item;
+                    T one = this.GetAs<T>();
+                    tArr = new T[1] { one };
+                }
+                catch
+                {
                 }
             }
-            else
-            {
-                yield return this.GetAs<T>();
-            }
+
+            return tArr;
         }
+
+
         /// <summary>
         /// Attempts to retrieve and cast the result of <see cref="GetValue()"/> as the specified type <typeparamref name="T"/>.
         /// </summary>

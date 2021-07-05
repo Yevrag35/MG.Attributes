@@ -22,12 +22,15 @@ namespace MG.Attributes.Tests
         [AdditionalValue(123)]
         Hi,
 
-        [AdditionalValue(new string[] { "one", "two" })]
-        Hello,
+        [AdditionalValue(123)]
+        Yo,
 
         [AdditionalValue("one")]
         [AdditionalValue("two")]
         GoodMorning,
+
+        [AdditionalValue(new string[] { "one", "two" })]
+        Hello,
 
         [AdditionalValue(new string[] { "one", "two" })]
         [AdditionalValue(new string[] { "three", "four" })]

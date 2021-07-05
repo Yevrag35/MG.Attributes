@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 namespace MG.Attributes
 {
-    public interface IValueCollection : IEnumerable
+    public interface IAttributeValueCollection : IEnumerable
     {
+        int Count { get; }
         ICollection GetValueCollection();
-        IEnumerable<T> GetValues<T>();
+        T[] GetValues<T>();
         //IEnumerable<T> GetValuesAs<T>();
     }
 }
