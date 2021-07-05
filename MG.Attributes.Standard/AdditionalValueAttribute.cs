@@ -14,7 +14,7 @@ namespace MG.Attributes
     ///     by <see cref="AttributeValuator"/> or another class implementing <see cref="IAttributeValueResolver"/>.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Enum | AttributeTargets.Property, AllowMultiple = true)]
-    public class AdditionalValueAttribute : Attribute, IValueAttribute
+    public class AdditionalValueAttribute : Attribute, IValueAttribute, IValueCollection
     {
         #region PROTECTED OVERRIDABLE PROPERTIES
         protected virtual object BackingValue { get; set; }
@@ -262,6 +262,12 @@ namespace MG.Attributes
         public bool ValueIsString() => typeof(string).Equals(this.BackingValueType);
 
         #region ENUMERATORS
+        /// <summary>
+        /// Returns an enumerator that iterates through the held values like a collection.
+        /// </summary>
+        /// <returns>
+        ///     A <see cref="IEnumerator"/> object that can be used to iterate through the collection.
+        /// </returns>
         public IEnumerator GetEnumerator()
         {
             if (this.TryGetAsCollection(out ICollection icol))

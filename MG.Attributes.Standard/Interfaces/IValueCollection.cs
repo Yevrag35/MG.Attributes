@@ -7,6 +7,7 @@ namespace MG.Attributes
     public interface IValueCollection : IEnumerable
     {
         ICollection GetValueCollection();
-        IEnumerable<T> GetValuesAs<T>();
+        IEnumerable<T> GetValues<T>();
+        //IEnumerable<T> GetValuesAs<T>();
     }
 }

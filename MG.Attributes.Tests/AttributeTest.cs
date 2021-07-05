@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using Moq;
 using Xunit;
 
@@ -88,13 +86,6 @@ namespace MG.Attributes.Tests
             Assert.IsType<InvalidCastException>(caughtYa);
         }
 
-        [Fact]
-        public void GetEnumFromValue()
-        {
-            var eval = new AttributeValuator();
-
-            Greetings e = eval.GetEnumFromValue<Greetings, AdditionalValueAttribute>(123);
-            Assert.Equal(Greetings.Hi, e);
-        }
+        
     }
 }

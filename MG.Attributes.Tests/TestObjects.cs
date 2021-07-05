@@ -17,6 +17,8 @@ namespace MG.Attributes.Tests
     }
     public enum Greetings
     {
+        Default,
+
         [AdditionalValue(123)]
         Hi,
 
@@ -29,6 +31,9 @@ namespace MG.Attributes.Tests
 
         [AdditionalValue(new string[] { "one", "two" })]
         [AdditionalValue(new string[] { "three", "four" })]
-        GoodAfternoon
+        GoodAfternoon,
+
+        [AdditionalValue("german")]
+        GutenTag
     }
 }
