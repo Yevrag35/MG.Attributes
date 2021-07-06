@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8321CF73-DDFB-43B6-AC55-0A998E078B86}</ProjectGuid>
+    <ProjectGuid>{B5428180-761B-4782-85C9-CC8FE543C4D3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MG.Attributes</RootNamespace>
     <AssemblyName>MG.Attributes</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -30,29 +29,32 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <DocumentationFile>bin\Release\MG.Attributes.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractAttribute.cs" />
-    <None Include="AbstractClass.cs" />
-    <Compile Include="AttributeResolver.cs" />
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="IAttribute.cs" />
-    <Compile Include="IAttributeResolver.cs" />
-    <Compile Include="NameAttribute.cs" />
+    <Compile Include="Attributes\AdditionalValueAttribute.cs" />
+    <Compile Include="Evaluator\AttributeValuator-Enums.cs" />
+    <None Include="zz_NotFinished\AttributeValuator-Objects.cs" />
+    <Compile Include="Evaluator\AttributeValuator.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Interfaces\IAttributeValueResolver.cs" />
+    <Compile Include="Interfaces\IValueAttribute.cs" />
+    <Compile Include="Interfaces\IValueCollection.cs" />
+    <Compile Include="Interfaces\IValueEnumGetter.cs" />
+    <None Include="zz_NotFinished\IValueMemberGetter.cs" />
+    <Compile Include="Interfaces\IValueRecaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Testing.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" sign /f "$(ProjectDir)CodeSigning.pfx" /p 7)aywTK@!maKHu)q@m8cB)8iw /t http://timestamp.globalsign.com/scripts/timstamp.dll "$(TargetDir)$(TargetFileName)"</PostBuildEvent>
-  </PropertyGroup>
 </Project>

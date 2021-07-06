@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.0</TargetFramework>
+    <RootNamespace>MG.Attributes</RootNamespace>
+    <PackageId>MG.Attributes</PackageId>
+    <Authors>Mike Garvey</Authors>
+    <Company>Yevrag35, LLC.</Company>
+    <Product>MG.Attributes</Product>
+    <Description>Library for defining and querying additional value attributes.</Description>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
+    <PackageProjectUrl>https://git.yevrag35.com/mg.attributes.git</PackageProjectUrl>
+    <RepositoryUrl>https://git.yevrag35.com/mg.attributes.git</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <Copyright>Copyright © 2018-2021 Yevrag35, LLC.</Copyright>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <AssemblyName>MG.Attributes</AssemblyName>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Version>1.0.0.2</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DocumentationFile>E:\Local_Repos\MG.Attributes\MG.Attributes-Standard\MG.Attributes.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="..\MG.Attributes-DotNet\**\*.cs" Exclude="..\MG.Attributes-DotNet\Properties\AssemblyInfo.cs;..\MG.Attributes-DotNet\bin\**\*.*;..\MG.Attributes-DotNet\obj\**\*.*;..\MG.Attributes-DotNet\zz_NotFinished\**\*.*" />
+	</ItemGroup>
+</Project>

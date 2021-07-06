@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace MG.Attributes
 {
-    public partial class AttributeValuator : IValueEnumGetter, IValueMemberGetter
+    public partial class AttributeValuator : IValueEnumGetter//, IValueMemberGetter
     {
         /// <summary>
         /// Retrieves a secondary value from an <see cref="IValueAttribute"/> attribute attached to 

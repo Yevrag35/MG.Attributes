@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MG.Attributes-Old", "MG.Attributes-Old\MG.Attributes-Old.csproj", "{8321CF73-DDFB-43B6-AC55-0A998E078B86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MG.Attributes-Standard", "MG.Attributes-Standard\MG.Attributes-Standard.csproj", "{F4F46AED-46D7-4903-91EC-B3020F806EBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MG.Attributes.Standard", "MG.Attributes.Standard\MG.Attributes.Standard.csproj", "{F4F46AED-46D7-4903-91EC-B3020F806EBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MG.Attributes.Tests", "MG.Attributes.Tests\MG.Attributes.Tests.csproj", "{79FF07C4-E16E-4BF9-8EB1-94410F9ED455}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttributeTesting", "AttributeTesting\AttributeTesting.csproj", "{F12B3648-F7E2-47A8-86F8-4C145C793CC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MG.Attributes-DotNet", "MG.Attributes-DotNet\MG.Attributes-DotNet.csproj", "{B5428180-761B-4782-85C9-CC8FE543C4D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8321CF73-DDFB-43B6-AC55-0A998E078B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8321CF73-DDFB-43B6-AC55-0A998E078B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8321CF73-DDFB-43B6-AC55-0A998E078B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8321CF73-DDFB-43B6-AC55-0A998E078B86}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F4F46AED-46D7-4903-91EC-B3020F806EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F4F46AED-46D7-4903-91EC-B3020F806EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4F46AED-46D7-4903-91EC-B3020F806EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4F46AED-46D7-4903-91EC-B3020F806EBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F12B3648-F7E2-47A8-86F8-4C145C793CC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F12B3648-F7E2-47A8-86F8-4C145C793CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F12B3648-F7E2-47A8-86F8-4C145C793CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F12B3648-F7E2-47A8-86F8-4C145C793CC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79FF07C4-E16E-4BF9-8EB1-94410F9ED455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79FF07C4-E16E-4BF9-8EB1-94410F9ED455}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79FF07C4-E16E-4BF9-8EB1-94410F9ED455}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79FF07C4-E16E-4BF9-8EB1-94410F9ED455}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5428180-761B-4782-85C9-CC8FE543C4D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5428180-761B-4782-85C9-CC8FE543C4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5428180-761B-4782-85C9-CC8FE543C4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5428180-761B-4782-85C9-CC8FE543C4D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
