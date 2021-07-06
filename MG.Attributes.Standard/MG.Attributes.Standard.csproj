@@ -5,6 +5,20 @@
     <RootNamespace>MG.Attributes</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="AttributeValuator\AttributeValuator-Objects.cs" />
+    <Compile Remove="Interfaces\IValueMemberGetter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="AttributeValuator\AttributeValuator-Objects.cs" />
+    <None Include="Interfaces\IValueMemberGetter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+
 	<!--<ItemGroup>
 		<Compile Include="..\MG.Attributes.DotNet35\**\*.cs"
 			 Exclude="..\MG.Attributes.DotNet35\Properties\AssemblyInfo.cs;..\MG.Attributes.DotNet35\obj\**\*.cs"/>

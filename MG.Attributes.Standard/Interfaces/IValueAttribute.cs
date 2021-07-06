@@ -10,16 +10,19 @@ namespace MG.Attributes
     public interface IValueAttribute
     {
         /// <summary>
-        /// The specified value given during an <see cref="Attribute"/> class's construction.
+        /// The specified value given during the <see cref="IValueAttribute"/> implementing class's construction.
         /// </summary>
         object Value { get; }
 
         /// <summary>
-        /// Returns the casted property value of <see cref="IValueAttribute.Value"/>.
-        /// Dynamics are not supported.
+        /// Returns the held value of the <see cref="IValueAttribute"/> and casts it to the 
+        /// specified type <typeparamref name="T"/>.
         /// </summary>
+        /// <remarks>
+        ///     Dynamics are not supported.
+        /// </remarks>
         /// <typeparam name="T">
-        ///     The type to cast <see cref="IValueAttribute.Value"/>'s 
+        ///     The type to cast <see cref="Value"/>'s 
         ///     property as.
         /// </typeparam>
         /// <exception cref="InvalidCastException">Thrown when the object value
