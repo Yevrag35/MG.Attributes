@@ -16,7 +16,7 @@ namespace MG.Attributes
     ///     by <see cref="AttributeValuator"/> or another class implementing <see cref="IAttributeValueResolver"/>.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Enum | AttributeTargets.Property, AllowMultiple = true)]
-    public class AdditionalValueAttribute : Attribute, IValueAttribute, IAttributeValueCollection, IComparable<AdditionalValueAttribute>
+    public class AdditionalValueAttribute : Attribute, IValueAttribute, IAttributeValueCollection
     {
         #region PRIVATE FIELDS/CONSTANTS
         //private int _valueCount => this.BackingValue is null ? 0 : 1;
@@ -86,33 +86,6 @@ namespace MG.Attributes
         #endregion
 
         #region METHODS
-
-        public int CompareTo(AdditionalValueAttribute other)
-        {
-            if (this.BackingValueType.GetTypeInfo().IsValueType && other.BackingValueType.GetTypeInfo().IsValueType)
-                return Comparer<ValueType>.Default.Compare((ValueType)this.GetValue(), (ValueType)other.GetValue());
-
-            else if (this.BackingValueType == other.BackingValueType)
-            {
-                Type genCtor = typeof(Comparer<>).MakeGenericType(this.BackingValueType);
-                PropertyInfo pi = genCtor.GetRuntimeProperty(nameof(Comparer<object>.Default));
-                object defaultComparer = pi.GetValue(null);
-
-                MethodInfo compareMeth = defaultComparer.GetType().GetRuntimeMethod(nameof(Comparer<object>.Default.Compare),
-                    new Type[] { this.BackingValueType, this.BackingValueType });
-
-                object result = compareMeth.Invoke(defaultComparer, new object[] { this.GetValue(), other.GetValue() });
-                if (result is int number)
-                    return number;
-
-                else
-                    throw new InvalidOperationException();
-            }
-            else
-            {
-                return Comparer<object>.Default.Compare(this.GetValue(), other.GetValue());
-            }
-        }
 
         /// <summary>
         /// Returns the held value of the <see cref="AdditionalValueAttribute"/> and casts it to the 
