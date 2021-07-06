@@ -297,7 +297,6 @@ namespace MG.Attributes
                 }
             }
 
-            list.Sort(new TupleComparer<TAttribute, TEnum>());
             return list;
         }
 
@@ -322,16 +321,5 @@ namespace MG.Attributes
         }
 
         private static TOutput ConvertToGeneric<TOutput>(object input) => (TOutput)input;
-
-        private class TupleComparer<TAttribute, TEnum> : IComparer<(TAttribute, TEnum)>
-            where TAttribute : Attribute
-            where TEnum : Enum
-        {
-            public int Compare((TAttribute, TEnum) x, (TAttribute, TEnum) y)
-            {
-                int ei = x.Item2.CompareTo(y.Item2);
-                return ei == 0 ? Comparer<TAttribute>.Default.Compare(x.Item1, y.Item1) : ei;
-            }
-        }
     }
 }

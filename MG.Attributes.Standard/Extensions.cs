@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MG.Attributes
 {
@@ -9,8 +10,8 @@ namespace MG.Attributes
         internal static TProp[] FilterAndReturn<TClass, TProp>(this List<TClass> list, Predicate<TClass> predicate, 
             Func<TClass, TProp> getPropertyOrField)
         {
-            IReadOnlyList<TClass> found = list?.FindAll(predicate);
-            return GetSubArray(found, getPropertyOrField);
+            IEnumerable<TClass> found = list?.FindAll(predicate);
+            return found.Select(x => getPropertyOrField(x)).Distinct().ToArray();
         }
 
         internal static bool Overlaps<T>(this T[] array, IEnumerable<T> other)
