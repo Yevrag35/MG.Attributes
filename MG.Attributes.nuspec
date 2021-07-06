@@ -3,7 +3,7 @@
   <metadata>
     <id>MG.Attributes</id>
     <title>MG.Attributes</title>
-    <version>1.0.0</version>
+    <version>1.0.0.2</version>
     <authors>Mike Garvey</authors>
     <owners>Yevrag35, LLC.</owners>
     <license type="file">licenses\LICENSE.txt</license>
@@ -16,19 +16,28 @@
     <repository type="Git" url="https://git.yevrag35.com/mg.attributes.git" />
     <summary>A small library for defining and querying additional value attributes.</summary>
     <dependencies>
+	  <group targetFramework=".NETFramework4.5">
+	    <dependency id="System.ValueTuple" version="4.5.0" />
+	  </group>
       <group targetFramework=".NETStandard1.0">
-        <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
-        <dependency id="System.ValueTuple" version="4.5.0" exclude="Build,Analyzers" />
+        <dependency id="NETStandard.Library" version="1.6.1" />
+        <dependency id="System.ValueTuple" version="4.5.0" />
       </group>
     </dependencies>
   </metadata>
   <files>
     <file
-      src="MG.Attributes.Standard\bin\Release\netstandard1.0\MG.Attributes.dll"
+      src="MG.Attributes-Standard\bin\Release\netstandard1.0\MG.Attributes.dll"
       target="lib\netstandard1.0\MG.Attributes.dll" />
 	<file
-	  src="MG.Attributes.Standard\bin\Release\netstandard1.0\MG.Attributes.xml"
+	  src="MG.Attributes-Standard\bin\Release\netstandard1.0\MG.Attributes.xml"
 	  target="lib\netstandard1.0\MG.Attributes.xml" />
     <file src="LICENSE.txt" target="licenses\" />
+	<file
+	  src="MG.Attributes-DotNet\bin\Release\MG.Attributes.dll"
+	  target="lib\net45\MG.Attributes.dll" />
+	<file
+	  src="MG.Attributes-DotNet\bin\Release\MG.Attributes.xml"
+	  target="lib\net45\MG.Attributes.xml" />
   </files>
 </package>

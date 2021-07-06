@@ -8,8 +8,8 @@
     <Company>Yevrag35, LLC.</Company>
     <Product>MG.Attributes</Product>
     <Description>Library for defining and querying additional value attributes.</Description>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>1.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
     <PackageProjectUrl>https://git.yevrag35.com/mg.attributes.git</PackageProjectUrl>
     <RepositoryUrl>https://git.yevrag35.com/mg.attributes.git</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
@@ -17,34 +17,27 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AssemblyName>MG.Attributes</AssemblyName>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Version>1.0.0.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    <DocumentationFile>E:\Local_Repos\MG.Attributes\MG.Attributes.Standard\MG.Attributes.xml</DocumentationFile>
+    <DocumentationFile>E:\Local_Repos\MG.Attributes\MG.Attributes-Standard\MG.Attributes.xml</DocumentationFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="AttributeValuator\AttributeValuator-Objects.cs" />
-    <Compile Remove="Interfaces\IValueMemberGetter.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\LICENSE.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="AttributeValuator\AttributeValuator-Objects.cs" />
-    <None Include="Interfaces\IValueMemberGetter.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
-	<!--<ItemGroup>
-		<Compile Include="..\MG.Attributes.DotNet35\**\*.cs"
-			 Exclude="..\MG.Attributes.DotNet35\Properties\AssemblyInfo.cs;..\MG.Attributes.DotNet35\obj\**\*.cs"/>
-	</ItemGroup>-->
+	<ItemGroup>
+		<Compile Include="..\MG.Attributes-DotNet\**\*.cs" Exclude="..\MG.Attributes-DotNet\Properties\AssemblyInfo.cs;..\MG.Attributes-DotNet\bin\**\*.*;..\MG.Attributes-DotNet\obj\**\*.*;..\MG.Attributes-DotNet\zz_NotFinished\**\*.*" />
+	</ItemGroup>
 </Project>

@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MG.Attributes.Standard\MG.Attributes.Standard.csproj" />
+    <ProjectReference Include="..\MG.Attributes-Standard\MG.Attributes-Standard.csproj" />
   </ItemGroup>
 
 </Project>

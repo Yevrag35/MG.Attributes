@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MG.Attributes-Old")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("MG.Attributes")]
+[assembly: AssemblyDescription("A small library for defining and querying additional value attributes.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Yevrag35, LLC.")]
-[assembly: AssemblyProduct("MG.Attributes-Old")]
-[assembly: AssemblyCopyright("Copyright © 2019 Yevrag35, LLC.")]
+[assembly: AssemblyProduct("MG.Attributes")]
+[assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("8321cf73-ddfb-43b6-ac55-0a998e078b86")]
+[assembly: Guid("b5428180-761b-4782-85c9-cc8fe543c4d3")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.3.1.0")]
-[assembly: AssemblyFileVersion("2.3.1.0")]
+[assembly: AssemblyVersion("1.0.0.2")]
+[assembly: AssemblyFileVersion("1.0.0.2")]
