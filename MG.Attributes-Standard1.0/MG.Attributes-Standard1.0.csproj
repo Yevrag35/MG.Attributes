@@ -8,16 +8,17 @@
     <Company>Yevrag35, LLC.</Company>
     <Product>MG.Attributes</Product>
     <Description>Library for defining and querying additional value attributes.</Description>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>1.0.1</FileVersion>
     <PackageProjectUrl>https://git.yevrag35.com/mg.attributes.git</PackageProjectUrl>
     <RepositoryUrl>https://git.yevrag35.com/mg.attributes.git</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <Copyright>Copyright © 2018-2021 Yevrag35, LLC.</Copyright>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AssemblyName>MG.Attributes</AssemblyName>
+	<AssemblyTitle>Attribute Value Library .NET Standard 1.0</AssemblyTitle>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <Version>1.0.0.2</Version>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -33,11 +34,11 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\MG.Attributes-DotNet\**\*.cs" Exclude="..\MG.Attributes-DotNet\Properties\AssemblyInfo.cs;..\MG.Attributes-DotNet\bin\**\*.*;..\MG.Attributes-DotNet\obj\**\*.*;..\MG.Attributes-DotNet\zz_NotFinished\**\*.*;..\MG.Attributes-DotNet\**\*_Extended.cs" />
+	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Include="..\MG.Attributes-DotNet\**\*.cs" Exclude="..\MG.Attributes-DotNet\Properties\AssemblyInfo.cs;..\MG.Attributes-DotNet\bin\**\*.*;..\MG.Attributes-DotNet\obj\**\*.*;..\MG.Attributes-DotNet\zz_NotFinished\**\*.*" />
+	  <PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 </Project>

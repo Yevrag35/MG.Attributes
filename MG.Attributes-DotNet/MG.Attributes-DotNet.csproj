@@ -42,19 +42,20 @@
   <ItemGroup>
     <Compile Include="Attributes\AdditionalValueAttribute.cs" />
     <Compile Include="Evaluator\AttributeValuator-Enums.cs" />
+    <None Include="packages.config" />
     <None Include="zz_NotFinished\AttributeValuator-Objects.cs" />
+    <Compile Include="Evaluator\AttributeValuator-Generic_Extended.cs" />
+    <Compile Include="Evaluator\AttributeValuator-Generic_Legacy.cs" />
     <Compile Include="Evaluator\AttributeValuator.cs" />
+    <Compile Include="Evaluator\AttributeValuator-Generic.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Interfaces\IAttributeValueResolver.cs" />
     <Compile Include="Interfaces\IValueAttribute.cs" />
     <Compile Include="Interfaces\IValueCollection.cs" />
     <Compile Include="Interfaces\IValueEnumGetter.cs" />
     <None Include="zz_NotFinished\IValueMemberGetter.cs" />
-    <Compile Include="Interfaces\IValueRecaller.cs" />
+    <Compile Include="Interfaces\IAttributeValueReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

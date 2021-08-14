@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>MG.Attributes</RootNamespace>
+    <AssemblyName>MG.Attributes</AssemblyName>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <FileVersion>1.0.2</FileVersion>
+    <Version>1.0.2</Version>
+    <Authors>Mike Garvey</Authors>
+    <Company>Yevrag35, LLC.</Company>
+    <Description>Library for defining and querying additional value attributes.</Description>
+    <Copyright>Copyright © 2018-2021 Yevrag35, LLC.</Copyright>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://git.yevrag35.com/mg.attributes.git</PackageProjectUrl>
+    <RepositoryUrl>https://git.yevrag35.com/mg.attributes.git</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+	<AssemblyTitle>Attribute Value Library .NET Standard 2.0</AssemblyTitle>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+		<DocumentationFile>E:\Local_Repos\MG.Attributes\MG.Attributes-Standard\MG.Attributes.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE.txt">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\LICENSE.txt">
+		  <Pack>True</Pack>
+		  <PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="..\MG.Attributes-DotNet\**\*.cs" Exclude="..\MG.Attributes-DotNet\Properties\AssemblyInfo.cs;..\MG.Attributes-DotNet\bin\**\*.*;..\MG.Attributes-DotNet\obj\**\*.*;..\MG.Attributes-DotNet\zz_NotFinished\**\*.*;..\MG.Attributes-DotNet\**\*_Legacy.cs" />
+	</ItemGroup>
+
+</Project>
