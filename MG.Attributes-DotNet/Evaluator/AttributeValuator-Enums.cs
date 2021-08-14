@@ -67,6 +67,16 @@ namespace MG.Attributes
             return list.ToArray();
         }
 
+        /// <summary>
+        /// Attempts to get the first value from the attributed <see cref="IValueAttribute"/> of the 
+        /// <see cref="Enum"/>.
+        /// </summary>
+        /// <typeparam name="TOutput">The type of the underlying value.</typeparam>
+        /// <typeparam name="TAttribute">The type of the <see cref="IValueAttribute"/>.</typeparam>
+        /// <param name="enumValue">The <see cref="Enum"/> whose attribute's value is retrieved.</param>
+        /// <param name="outValue"></param>
+        /// <param name="caughtException"></param>
+        /// <returns></returns>
         public bool TryGetAttributeValue<TOutput, TAttribute>(Enum enumValue, out TOutput outValue, out Exception caughtException)
             where TAttribute : Attribute, IValueAttribute
         {
@@ -129,17 +139,26 @@ namespace MG.Attributes
             return e;
         }
 
-        public TEnum[] GetEnumsFromValue<TEnum, TAttribute>(object objValue)
+        /// <summary>
+        /// Returns the individual <see cref="Enum"/> values that are decorated with <see cref="IValueAttribute"/>
+        /// attributes whose <see cref="IValueAttribute.Value"/> matches the specified value.
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <typeparam name="TAttribute"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        public TEnum[] GetEnumsFromValue<TEnum, TAttribute>(object value)
             where TEnum : Enum
             where TAttribute : Attribute, IValueAttribute
         {
-            if (objValue is null)
-                throw new ArgumentNullException(nameof(objValue));
+            if (value is null)
+                throw new ArgumentNullException(nameof(value));
 
             return GetAttributesFromAllEnums<TAttribute, TEnum>()
                 .FilterAndReturn(
                     tuple =>
-                        tuple.Item1.Value.Equals(objValue),
+                        tuple.Item1.Value.Equals(value),
                         tuple => tuple.Item2);
 
             //List<(TAttribute, TEnum)> attsAndEnums = GetAttributesFromAllEnums<TAttribute, TEnum>();
