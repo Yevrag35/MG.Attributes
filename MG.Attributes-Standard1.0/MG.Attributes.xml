@@ -185,11 +185,6 @@
                 By default, <paramref name="value"/>'s <see cref="T:System.Type"/> resolved by <see cref="M:System.Object.GetType"/>
             </returns>
         </member>
-        <member name="T:MG.Attributes.AttributeValuator">
-            <summary>
-            A class that can read attributes from given decorated class members.
-            </summary>
-        </member>
         <member name="M:MG.Attributes.AttributeValuator.GetAttributeValue``2(System.Enum)">
             <summary>
             Gets the first value from the attributed <see cref="T:MG.Attributes.IValueAttribute"/> of the <see cref="T:System.Enum"/>, then casts 
@@ -219,18 +214,6 @@
             <param name="enumValue">The specific enumeration value that has the attached <see cref="T:MG.Attributes.IValueAttribute"/> attributes.</param>
             <exception cref="T:System.TypeLoadException">A custom attribute type cannot be loaded.</exception>
         </member>
-        <member name="M:MG.Attributes.AttributeValuator.TryGetAttributeValue``2(System.Enum,``0@,System.Exception@)">
-            <summary>
-            Attempts to get the first value from the attributed <see cref="T:MG.Attributes.IValueAttribute"/> of the 
-            <see cref="T:System.Enum"/>.
-            </summary>
-            <typeparam name="TOutput">The type of the underlying value.</typeparam>
-            <typeparam name="TAttribute">The type of the <see cref="T:MG.Attributes.IValueAttribute"/>.</typeparam>
-            <param name="enumValue">The <see cref="T:System.Enum"/> whose attribute's value is retrieved.</param>
-            <param name="outValue"></param>
-            <param name="caughtException"></param>
-            <returns></returns>
-        </member>
         <member name="M:MG.Attributes.AttributeValuator.GetEnumFromValue``2(System.Object)">
             <summary>
             Gets the first, lowest enumeration that has an <see cref="P:MG.Attributes.IValueAttribute.Value"/> matching 
@@ -251,19 +234,6 @@
                 An <see cref="T:System.Enum"/> value of type <typeparamref name="TEnum"/> that has an <see cref="T:MG.Attributes.IValueAttribute"/>
                 implementing <see cref="T:System.Attribute"/> whose held value matches the specified <paramref name="objValue"/>.
             </returns>
-        </member>
-        <member name="M:MG.Attributes.AttributeValuator.GetEnumsFromValue``2(System.Object)">
-            <summary>
-            Returns the individual <see cref="T:System.Enum"/> values that are decorated with <see cref="T:MG.Attributes.IValueAttribute"/>
-            attributes whose <see cref="P:MG.Attributes.IValueAttribute.Value"/> matches the specified value.
-            </summary>
-            <typeparam name="TEnum"></typeparam>
-            <typeparam name="TAttribute"></typeparam>
-            <param name="value">The value that is equal to <see cref="P:MG.Attributes.IValueAttribute.Value"/>.</param>
-            <returns>
-                A single-dimensional array of <typeparamref name="TEnum"/> values that equate to <paramref name="value"/>.
-            </returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:MG.Attributes.AttributeValuator.GetEnumsFromValues``3(System.Collections.Generic.IEnumerable{``2})">
             <summary>
@@ -286,9 +256,9 @@
             <typeparam name="TInput">The type of the collection's items.</typeparam>
             <typeparam name="TOutput">The type of <see cref="T:System.Enum"/> that will be returned.</typeparam>
             <typeparam name="TAttribute">The type of <see cref="T:MG.Attributes.IValueAttribute"/> that is attached.</typeparam>
-            <param name="values">The collection of items the <see cref="P:MG.Attributes.IValueAttribute.Value"/> should equal.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="values"/> is <see langword="null"/>.</exception>
-            <exception cref="T:System.ArgumentException"><paramref name="values"/> contains no non-<see langword="null"/> elements.</exception>
+            <param name="objValues">The collection of items the <see cref="P:MG.Attributes.IValueAttribute.Value"/> should equal.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="objValues"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="objValues"/> contains no elements.</exception>
             <exception cref="T:System.TypeLoadException">A custom attribute type cannot be loaded.</exception>
         </member>
         <member name="M:MG.Attributes.AttributeValuator.GetAttributesFromEnum``1(System.Enum)">
@@ -312,53 +282,6 @@
             <returns>
                 A <see cref="T:System.Reflection.FieldInfo"/> object that represents the specified field of the enumeration value, or
                 <see langword="null"/> if the field is not found.
-            </returns>
-        </member>
-        <member name="M:MG.Attributes.AttributeValuator.#ctor">
-            <summary>
-            The default constructor initializing a new <see cref="T:MG.Attributes.AttributeValuator"/> instance.
-            </summary>
-        </member>
-        <member name="T:MG.Attributes.IAttributeValueReader">
-            <summary>
-            An interface exposing the methods for reading values from <see cref="T:MG.Attributes.IValueAttribute"/>.
-            </summary>
-        </member>
-        <member name="M:MG.Attributes.IAttributeValueReader.GetAttributeValue``2(System.Enum)">
-            <summary>
-            Gets the first value from the attributed <see cref="T:MG.Attributes.IValueAttribute"/> of the enumeration value and casts 
-            it to the type <typeparamref name="TOutput"/>.
-            </summary>
-            <typeparam name="TOutput">The type of the underlying value.</typeparam>
-            <typeparam name="TAttribute">The type of the <see cref="T:MG.Attributes.IValueAttribute"/>.</typeparam>
-            <param name="enumValue">The <see cref="T:System.Enum"/> whose value is retrieved.</param>
-            <returns>
-                The value specified in <see cref="P:MG.Attributes.IValueAttribute.Value"/> cast as <typeparamref name="TOutput"/>.
-            </returns>
-            <exception cref="T:System.InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
-            <exception cref="T:System.TypeLoadException">A custom attribute type cannot be loaded.</exception>
-        </member>
-        <member name="M:MG.Attributes.IAttributeValueReader.GetAttributeValue``1(System.Enum)">
-            <summary>
-            Gets the first value from the attributed <see cref="T:MG.Attributes.IValueAttribute"/> of the <see cref="T:System.Enum"/>.
-            </summary>
-            <typeparam name="TAttribute">The type of the <see cref="T:MG.Attributes.IValueAttribute"/>.</typeparam>
-            <param name="enumValue">The <see cref="T:System.Enum"/> whose value is retrieved.</param>
-            <returns>
-                The <see cref="T:System.Object"/> value specified in <see cref="P:MG.Attributes.IValueAttribute.Value"/>.
-            </returns>
-            <exception cref="T:System.TypeLoadException">A custom attribute type cannot be loaded.</exception>
-        </member>
-        <member name="M:MG.Attributes.IAttributeValueReader.GetAttributeValues``2(System.Enum)">
-            <summary>
-            Gets the first value from the attributed <see cref="T:MG.Attributes.IValueAttribute"/> of the enumeration value and casts 
-            it to the type <typeparamref name="TOutput"/>.
-            </summary>
-            <typeparam name="TOutput">The type of the underlying value.</typeparam>
-            <typeparam name="TAttribute">The type of the <see cref="T:MG.Attributes.IValueAttribute"/>.</typeparam>
-            <param name="enumValue">The <see cref="T:System.Enum"/> whose value is retrieved.</param>
-            <returns>
-                A single-dimension array of values as <typeparamref name="TOutput"/>.
             </returns>
         </member>
         <member name="T:MG.Attributes.IValueAttribute">
@@ -453,6 +376,25 @@
             <typeparam name="TOutput">The type of <see cref="T:System.Enum"/> that will be returned.</typeparam>
             <typeparam name="TAtt">The type of <see cref="T:MG.Attributes.IValueAttribute"/> that is attached.</typeparam>
             <param name="objValues">The collection of items the <see cref="P:MG.Attributes.IValueAttribute.Value"/> should equal.</param>
+        </member>
+        <member name="M:MG.Attributes.IValueRecaller.GetAttributeValue``2(System.Enum)">
+            <summary>
+            Gets the first value from the attributed <see cref="T:MG.Attributes.IValueAttribute"/> of the enumeration value and casts 
+            it to the type <typeparamref name="TOutput"/>.
+            </summary>
+            <typeparam name="TOutput">The type of the underlying value.</typeparam>
+            <typeparam name="TAttribute">The type of the <see cref="T:MG.Attributes.IValueAttribute"/>.</typeparam>
+            <param name="enumValue">The <see cref="T:System.Enum"/> whose value is retrieved.</param>
+            <exception cref="T:System.InvalidCastException">The secondary value cannot be converted to the specified type.</exception>
+            <exception cref="T:System.TypeLoadException">A custom attribute type cannot be loaded.</exception>
+        </member>
+        <member name="M:MG.Attributes.IValueRecaller.GetAttributeValue``1(System.Enum)">
+            <summary>
+            Gets the first value from the attributed <see cref="T:MG.Attributes.IValueAttribute"/> of the <see cref="T:System.Enum"/>.
+            </summary>
+            <typeparam name="TAttribute">The type of the <see cref="T:MG.Attributes.IValueAttribute"/>.</typeparam>
+            <param name="enumValue">The <see cref="T:System.Enum"/> whose value is retrieved.</param>
+            <exception cref="T:System.TypeLoadException">A custom attribute type cannot be loaded.</exception>
         </member>
     </members>
 </doc>

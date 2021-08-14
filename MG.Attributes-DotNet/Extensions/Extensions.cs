@@ -11,7 +11,7 @@ namespace MG.Attributes
             Func<TClass, TProp> getPropertyOrField)
         {
             IEnumerable<TClass> found = list?.FindAll(predicate);
-            return found.Select(x => getPropertyOrField(x)).Distinct().ToArray();
+            return found?.Select(x => getPropertyOrField(x)).Distinct().ToArray();
         }
 
         internal static bool Overlaps<T>(this T[] array, IEnumerable<T> other)

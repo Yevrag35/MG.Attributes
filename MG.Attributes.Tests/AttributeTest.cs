@@ -85,7 +85,5 @@ namespace MG.Attributes.Tests
             Assert.NotNull(caughtYa);
             Assert.IsType<InvalidCastException>(caughtYa);
         }
-
-        
     }
 }
