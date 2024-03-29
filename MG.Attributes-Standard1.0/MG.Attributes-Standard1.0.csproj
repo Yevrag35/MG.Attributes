@@ -24,7 +24,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    <DocumentationFile>E:\Local_Repos\MG.Attributes\MG.Attributes-Standard\MG.Attributes.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,7 +34,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<Compile Include="..\MG.Attributes-DotNet\**\*.cs" Exclude="..\MG.Attributes-DotNet\Properties\AssemblyInfo.cs;..\MG.Attributes-DotNet\bin\**\*.*;..\MG.Attributes-DotNet\obj\**\*.*;..\MG.Attributes-DotNet\zz_NotFinished\**\*.*;..\MG.Attributes-DotNet\**\*_Extended.cs" />
+		<Compile Include="..\MG.Attributes-Standard2.0\**\*.cs" Exclude="..\MG.Attributes-Standard2.0\bin\**\*.*;..\MG.Attributes-Standard2.0\obj\**\*.*;..\MG.Attributes-Standard2.0\zz_NotFinished\**\*.*;..\MG.Attributes-Standard2.0\**\*_Extended.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
