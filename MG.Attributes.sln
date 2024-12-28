@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MG.Attributes.Tests", "MG.Attributes.Tests\MG.Attributes.Tests.csproj", "{79FF07C4-E16E-4BF9-8EB1-94410F9ED455}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MG.Attributes-Standard2.0", "MG.Attributes-Standard2.0\MG.Attributes-Standard2.0.csproj", "{0FB366D0-B653-479A-B289-0879C68C303E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MG.Attributes", "MG.Attributes\MG.Attributes.csproj", "{0FB366D0-B653-479A-B289-0879C68C303E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

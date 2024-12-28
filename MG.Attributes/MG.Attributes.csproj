@@ -4,26 +4,21 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>MG.Attributes</RootNamespace>
     <AssemblyName>MG.Attributes</AssemblyName>
-    <AssemblyVersion>2.0.0</AssemblyVersion>
-	<LangVersion>8.0</LangVersion>
-    <FileVersion>2.0.0</FileVersion>
-    <Version>2.0.0</Version>
+    <AssemblyVersion>3.0.0</AssemblyVersion>
+	<LangVersion>latest</LangVersion>
+    <FileVersion>3.0.0</FileVersion>
+    <Version>3.0.0</Version>
     <Authors>Mike Garvey</Authors>
     <Company>Yevrag35, LLC.</Company>
     <Description>Library for defining and querying additional value attributes.</Description>
-    <Copyright>Copyright © 2018-2024 Yevrag35, LLC.</Copyright>
+    <Copyright>Copyright © 2018-2025 Yevrag35, LLC.</Copyright>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://git.yevrag35.com/mg.attributes.git</PackageProjectUrl>
     <RepositoryUrl>https://git.yevrag35.com/mg.attributes.git</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-	<AssemblyTitle>Attribute Value Library .NET Standard 2.0</AssemblyTitle>
+	<AssemblyTitle>Attribute Value Library .NET</AssemblyTitle>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<DebugType>none</DebugType>
-		<DebugSymbols>false</DebugSymbols>
-		<DocumentationFile>E:\Local_Repos\MG.Attributes\MG.Attributes-Standard\MG.Attributes.xml</DocumentationFile>
-	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="..\LICENSE.txt">
@@ -34,6 +29,13 @@
 		  <Pack>True</Pack>
 		  <PackagePath></PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Nullable" Version="1.3.1">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
 	</ItemGroup>
 
 	<!--<ItemGroup>
